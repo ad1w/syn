@@ -1,0 +1,123 @@
+#!/bin/bash
+
+# List of command
+name=$(whoami)
+os=$(source /etc/os-release && echo $PRETTY_NAME)
+kernel=$(uname -sr)
+shell=$(basename $SHELL)
+uptime=$(uptime -p | sed 's/up //')
+wm=$(echo $DESKTOP_SESSION)
+mem=$(free -h | awk 'NR==2{print $3 " / " $2}')
+theme=$(cat ~/.config/gtk-3.0/settings.ini | grep 'gtk-theme-name' | cut -d '=' -f 2)
+icontheme=$(cat ~/.config/gtk-3.0/settings.ini | awk NR==11 | cut -d '=' -f 2)
+fonttheme=$(cat ~/.config/gtk-3.0/settings.ini | awk NR==10 | cut -d '=' -f 2 | cut -d ',' -f 1)
+
+#battery
+Battery=$(cat /sys/class/power_supply/BAT0/capacity)
+Midle="70"
+Low="20"
+if [ "$Battery" -le "$Low" ] ; then
+        battery="😥 Heal me !!! $Battery%"
+elif [ "$Battery" -le "$Midle" ] ; then
+        battery="$Battery%"
+else
+        battery="$Battery%"
+fi
+
+#brightness
+Level=$(cat /sys/class/backlight/acpi_video0/brightness)
+Max_lvl=$(cat /sys/class/backlight/acpi_video0/max_brightness)
+bright="$Level/$Max_lvl"
+
+#temperature
+Check=$(cat /sys/class/thermal/thermal_zone0/temp)
+Temp=$(cat /sys/class/thermal/thermal_zone0/temp | awk '{ print $1/1000"°C" }')
+Max_temp="86000"
+
+if [ "$Check" -ge "$Max_temp" ] ; then
+	temp="$Temp"
+else
+	temp="$Temp"
+fi
+
+#volume
+#Status=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3}' | tr -d '[]')
+#Volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print $2*100"%" }')
+
+#if [ "$Status" = "MUTED" ] ; then
+#        echo "$Volume (muted)"
+#else
+#        echo "$Volume"
+#fi
+
+Status=$(pactl list sinks | awk 'NR==9{print $2}')
+Volume=$(pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print $5}')
+if [ "$Status" = "yes" ] ; then
+	vol="$Volume (muted)"
+else
+	vol="$Volume"
+fi
+
+#date/time
+date=$(date '+%a %b %d')
+time=$(date '+%H:%M')
+date_time="$date, $time"
+
+#logo/ascii
+export PATH="${PATH}:/usr/bin/syn"
+export PATH="${PATH}:/usr/bin/syn_ascii"
+
+if [[ $1 = "-l" ]]; then
+	echo "$(syn.logo)"
+elif [[ $1 = "-a" ]]; then
+	echo "$(syn.get)"
+else
+	echo "$(syn.get)"
+fi
+
+# Add colors
+#normal
+bla=$(tput setaf 0)
+red=$(tput setaf 1)
+gre=$(tput setaf 2)
+yel=$(tput setaf 3)
+blu=$(tput setaf 4)
+mag=$(tput setaf 5)
+cya=$(tput setaf 6)
+whi=$(tput setaf 7)
+#bright
+bbla=$(tput setaf 8)
+bred=$(tput setaf 9)
+bgre=$(tput setaf 10)
+byel=$(tput setaf 11)
+bblu=$(tput setaf 12)
+bmag=$(tput setaf 13)
+bcya=$(tput setaf 14)
+bwhi=$(tput setaf 15)
+
+# Text styling (bold, reset)
+bld=$(tput bold)
+rst=$(tput sgr0)
+
+# Print result
+cat <<EOF
+$bld  User$rst:$blu $name $rst
+$bld  Distro$rst:$blu $os $rst
+$bld  Kernel$rst:$blu $kernel $rst
+$bld  Shell$rst:$blu $shell $rst
+
+$bld  WM/DE$rst:$gre $wm $rst
+$bld  Theme$rst:$gre $theme $rst
+$bld  Icons$rst:$gre $icontheme $rst
+$bld  Font$rst:$gre $fonttheme $rst
+
+$bld  Memory$rst:$red $mem $rst
+$bld  Battery$rst:$red $battery $rst
+$bld  Brightness$rst:$red $bright $rst
+$bld  Temperature$rst:$red $temp $rst
+$bld  Volume$rst:$red $vol $rst
+
+$bld  Date/Time$rst:$yel $date_time $rst
+$bld  Uptime$rst:$yel $uptime $rst
+
+EOF
