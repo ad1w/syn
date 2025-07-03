@@ -18,14 +18,14 @@ elif [ $distro = Void ]; then
 elif [ $distro = Ubuntu ]; then
         asc="$(ubuntu)"
 
-elif [ $distro = Fedora ]; then
-        asc="$(fedora)"
+#elif [ $distro = Fedora ]; then
+#        asc="$(fedora)"
 
-elif [ $distro = Manjaro ]; then
-        asc="$(manjaro)"
+#elif [ $distro = Manjaro ]; then
+#        asc="$(manjaro)"
 
-elif [ $distro = openSUSE ]; then
-        asc="$(opensuse)"
+#elif [ $distro = openSUSE ]; then
+#        asc="$(opensuse)"
 
 elif [ $distro = NixOS ]; then
         asc="$(nixos)"
@@ -33,32 +33,32 @@ elif [ $distro = NixOS ]; then
 elif [ $distro = Gentoo ]; then
         asc="$(gentoo)"
 
-elif [ $distro2 = Mint ]; then
-        asc="$(mint)"
+#elif [ $distro2 = Mint ]; then
+#        asc="$(mint)"
 
-elif [ $distro = LMDE ]; then
-        asc="$(mint)"
+#elif [ $distro = LMDE ]; then
+#        asc="$(mint)"
 
 elif [ $distro = EndeavourOS ]; then
         asc="$(endeavour)"
 
-elif [ $distro = Slackware ]; then
-        asc="$(slackware)"
+#elif [ $distro = Slackware ]; then
+#        asc="$(slackware)"
 
-elif [ $distro = Alpine ]; then
-        asc="$(alpine)"
+#elif [ $distro = Alpine ]; then
+#        asc="$(alpine)"
 
 elif [ $distro = Kali ]; then
         asc="$(kalilinux)"
 
-elif [ $distro = Artix ]; then
-        asc="$(artix)"
+#elif [ $distro = Artix ]; then
+#        asc="$(artix)"
 
-elif [ $distro = Solus ]; then
-        asc="$(solus)"
+#elif [ $distro = Solus ]; then
+#        asc="$(solus)"
 
-elif [ $distro = CRUX ]; then
-        asc="$(crux)"
+#elif [ $distro = CRUX ]; then
+#        asc="$(crux)"
 
 else
         asc="$(syn.logo)"
