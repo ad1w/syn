@@ -10,7 +10,7 @@ wm=$(echo $DESKTOP_SESSION)
 mem=$(free -h | awk 'NR==2{print $3 " / " $2}')
 theme=$(cat ~/.config/gtk-3.0/settings.ini | grep 'gtk-theme-name' | cut -d '=' -f 2)
 icontheme=$(cat ~/.config/gtk-3.0/settings.ini | grep 'gtk-icon-theme-name' | cut -d '=' -f 2)
-fonttheme=$(cat ~/.config/gtk-3.0/settings.ini | grep 'gtk-font-name' | cut -d '=' -f 2 | cut -d ',' -f 1)
+fonttheme=$(cat ~/.config/gtk-3.0/settings.ini | grep 'gtk-font-name' | cut -d '=' -f 2 | sed 's/, //')
 
 #battery
 Battery=$(cat /sys/class/power_supply/BAT0/capacity)
