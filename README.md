@@ -1,5 +1,7 @@
 # syn
-System information tool for linux
+Syn (System information) tool for linux \
+</br>
+![image](https://github.com/ad1w/syn/blob/main/syn.png)
 
 installation:
 ```
