@@ -69,8 +69,8 @@ export PATH="${PATH}:/usr/bin/syn_ascii"
 
 if [[ $1 = "-l" ]]; then
 	echo "$(syn.logo)"
-elif [[ $1 = "-a" ]]; then
-	echo "$(syn.get)"
+#elif [[ $1 = "-a" ]]; then
+#	echo "$(syn.get)"
 else
 	echo "$(syn.get)"
 fi
